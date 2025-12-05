@@ -9,6 +9,7 @@ import JoinChannelModal from "../Components/JoinChannelConfirmationModel";
 import socket from "../../Utils/ConnectToSocket";
 import { useRef } from "react";
 export default function Home() {
+    const [ShowGroupMembers, setShowGroupMembers] = useState(false)
     const [ShowCreateChannelBox, setShowCreateChannelBox] = useState(false)
     const [ShowJoinChannelBox, setShowJoinChannelBox] = useState(false)
     const [SelectedChannelJoin, setSelectedChannelJoin] = useState(null)
@@ -54,7 +55,7 @@ export default function Home() {
         setNoOfPages((prev) => {
             return prev
         })
-      
+
         console.log('roomName: MsgLst', MsgLst)
     }, [MsgLst]);
 
@@ -128,12 +129,12 @@ export default function Home() {
 
     }, [ActiveChannel]);
 
-    useEffect(()=>{
-if(pageNo!=NoOfPages){
-          setPageNo(NoOfPages)
+    useEffect(() => {
+        if (pageNo != NoOfPages) {
+            setPageNo(NoOfPages)
 
         }
-    },[NoOfPages])
+    }, [NoOfPages])
     useEffect(() => {
         console.log('IsUserMember', IsUserMember)
     }, [IsUserMember])
@@ -188,8 +189,8 @@ if(pageNo!=NoOfPages){
             toast.error("Message can't be empty");
             return;
         }
-        if(pageNo!=NoOfPages){
-          setPageNo(NoOfPages)
+        if (pageNo != NoOfPages) {
+            setPageNo(NoOfPages)
 
         }
         //  { message: "Hello Abhay 👋", sender: YourUsername, time: "10:21 AM" },
@@ -379,10 +380,10 @@ if(pageNo!=NoOfPages){
 
     }, [])
     useEffect(() => {
-    if (pageNo === NoOfPages) { 
-        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-}, [MsgLst]);
+        if (pageNo === NoOfPages) {
+            bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [MsgLst]);
 
     useEffect(() => {
         async function GetUserDetails() {
@@ -411,11 +412,11 @@ if(pageNo!=NoOfPages){
 
 
     }, [])
-    
+
 
     return <div className="HomePageContainer">
-        <div className="ShowNav"><img onClick={() => { setshownav((prev) => { return !prev }) }} src="Images/Menunew.png"></img></div>
-
+        <div className="ShowNav"><img onClick={() => { setshownav((prev) => { return !prev }) }} src={shownav ? "Images/closewhite.png" : "Images/Menunew.png"}></img></div>
+        {/* <div className="ShowNav"><img onClick={() => { setshownav((prev) => { return !prev }) }} src="Images/closewhite.png"></img></div> */}
         <div className="HomePageInnerContainer">
             {ShowCreateChannelBox && <ConfirmatioinModel onClose={() => { setShowCreateChannelBox(false); setNewChannel("") }} NewChannel={NewChannel} setNewChannel={setNewChannel} onCreate={HandleCreateChannel}></ConfirmatioinModel>}
             <JoinChannelModal show={ShowJoinChannelBox} onConfirm={() => { IsUserMember ? HandleLeaveChannel() : HandleJoinRoom() }} onCancel={() => { setShowJoinChannelBox(false); }} isAlreadyMember={IsUserMember} channelName={SelectedChannelJoin}></JoinChannelModal>
@@ -467,6 +468,7 @@ if(pageNo!=NoOfPages){
 
 
                                 }} style={{
+                                    width: '4rem',
                                     backgroundColor: ActiveChannel === ele.name ? "green" : "",
                                     color: 'black'
                                 }}
@@ -490,7 +492,9 @@ if(pageNo!=NoOfPages){
                     <h3 className="HomePageRightSideUpperSubHeading">{OnlineUserCount} Members Online</h3>
 
                 </div>
+                {/* ShowGroupMembers */}
                 <div className="HomePageRightSideBottomSection">
+                    <img onClick={()=>{setShowGroupMembers((prev)=>{return !prev})}} className="PeopleGroup" style={{zIndex:'1000', width: '1.4rem', height: '1.4rem', top: '1.2rem', right: '1rem' }} src={ShowGroupMembers?"Images/closeblack.png":"Images/ChannelMember.png"}></img>
                     <div className="MessageBox">
                         <div className="IsTyping">
                             <p style={{ color: 'black', textAlign: 'center', fontSize: '0.8rem', paddingLeft: '0.5rem' }}>{isTyping && `${isTyping} is typing....`}</p>
@@ -542,34 +546,34 @@ if(pageNo!=NoOfPages){
                         </div>
 
                     </div>
-                    <div className="OnlineUsersList">
-                        <div className="OnlineUsersHeading">
-                            <h3>Channel Members</h3>
-                        </div>
-                        <div className="OnlineUsersListInterior">
-                            {AllChannelMembers.map((ele) => {
-                                return <span className="OnlineUserListItem">
-                                    <span className={`status-dot ${ActiveMembers.includes(ele?.name) ? "online" : "offline"}`}></span>
-                                    <h4>{ele?.name}</h4>
-                                </span>
+                    <div style={{ right: ShowGroupMembers ? "0%" : "-100%" }} className="OnlineUsersList">
+                    <div className="OnlineUsersHeading">
+                        <h5>Channel Members</h5>
+                    </div>
+                    <div className="OnlineUsersListInterior">
+                        {AllChannelMembers.map((ele) => {
+                            return <span className="OnlineUserListItem">
+                                <span className={`status-dot ${ActiveMembers.includes(ele?.name) ? "online" : "offline"}`}></span>
+                                <h4>{ele?.name}</h4>
+                            </span>
 
-                            })}
+                        })}
 
-                            {/* <span className="OnlineUserListItem"><h4>User</h4></span> */}
+                        {/* <span className="OnlineUserListItem"><h4>User</h4></span> */}
 
-
-                        </div>
 
                     </div>
-
-
 
                 </div>
 
 
+
             </div>
+
 
         </div>
 
     </div>
+
+    </div >
 }
