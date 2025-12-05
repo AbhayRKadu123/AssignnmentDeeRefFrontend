@@ -1,0 +1,394 @@
+.HomePageContainer{
+    width: 100%;
+    height: 100%;
+    background-color: azure;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.HomePageInnerContainer{
+     width: 90%;
+    height: 90%;
+    background-color: azure;
+    display: flex;
+    border-radius: 0.5rem;
+    border: 1px solid black;
+
+}
+
+.HomePageLeftSide{
+    width: 20%;
+    height: 100%;
+    background-color: rgb(37, 37, 37);
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+
+
+
+}
+
+.HomePageRightSide{
+    width: 80%;
+    height: 100%;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+.HomePageLeftSideHeading{
+    width: 100%;
+    height: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.2rem;
+    font-size: 1.5rem;
+    color: white;
+    flex-direction: column;
+
+}
+.HomePageLeftSideHeading >p{
+    font-size: 1.5rem;
+}
+.LogoutBtn{
+    font-size: 0.75rem;
+    padding: 6px 14px;
+    background-color: white;
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #333;
+    font-weight: 500;
+    margin-top: 0.3rem;
+}
+
+/* Hover effect */
+.LogoutBtn:hover{
+    background-color: #ff4d4d;
+    color: white;
+    border-color: #ff4d4d;
+    box-shadow: 0 2px 6px rgba(255, 77, 77, 0.4);
+}
+
+/* Active (click) effect */
+.LogoutBtn:active{
+    transform: scale(0.95);
+}
+
+.HomePageLeftSideCreateChannel>h2{
+    padding: 0.5rem;
+    color: white;
+
+}
+.HomePageLeftSideCreateChannel{
+     
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.HomePageLeftSideAllChannels{
+    width: 100%;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+
+}
+.HomePageLeftSideAllChannels::-webkit-scrollbar{
+    display: none;
+}
+.HomePageRightSideUpperSection{
+    width: 100%;
+    height: 20%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.HomePageRightSideBottomSection{
+    width: 100%;
+    height: 80%;
+    background-color: white;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.ChannelName{
+    width: 80%;
+    height: 10%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    color: white;
+
+}
+.ChannelName>button{
+    background-color: white;
+    border: 1px solid black;
+    min-width: 4rem;
+    border-radius: 2rem;
+    font-size: 0.6rem;
+    color: 'black';
+}
+.HomePageRightSideUpperSectionHeading{
+    font-size: 2rem;
+    font-weight: 600;
+    margin-left: 1rem;
+    color: black;
+}
+.HomePageRightSideUpperSubHeading{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-left: 1rem;
+    color: black;
+    display: flex;
+    
+
+
+
+}
+.MessageBox{
+    height: 95%;
+    width: 70%;
+    /* background-color: aquamarine; */
+    border: 1px solid black;
+        border-radius: 0.5rem;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+}
+.MessageBoxScreen{
+    width: 80%;
+    height: 75%;
+     padding: 5px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.IsTyping{
+     width: 100%;
+    height: 5%;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    overflow-y: auto;
+    display: flex;
+   
+
+}
+.MessageBoxPaginationBox {
+    width: 100%;
+    height: 10%;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination-btn {
+    padding: 8px 18px;
+    background-color: #1c73e8;   /* blue button */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    font-weight: 500;
+}
+
+.pagination-btn:hover {
+    background-color: #155fc2;
+    transform: translateY(-2px);
+}
+
+.pagination-btn:active {
+    transform: scale(0.95);
+}
+
+.prev-btn {
+   background-color: #155fc2;  /* grey button for prev */
+}
+.BtnNotActive{
+
+ background-color: #6c757d;
+
+}
+
+/* .prev-btn:hover {
+    background-color: #5b6268;
+} */
+
+.MessageBoxScreen::-webkit-scrollbar{
+    display: none;
+}
+.MessageBox::-webkit-scrollbar{
+    display: none;
+}
+
+.MessageBoxInput{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 0.5rem;
+}
+.MessageInput {
+  width: 75%;              /* takes 80% of container */
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  background: #f9f9f9;
+  color: black;
+}
+
+.MessageInput:focus {
+  border-color: #007bff;
+  background: #fff;
+}
+
+.MessageSendBtn {
+  width: 18%;              /* takes 18% of container */
+  padding: 12px 0;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #007bff;
+  color: white;
+  font-weight: 600;
+  margin-left: 0.2rem;
+}
+
+.MessageSendBtn:hover {
+  background: #005fcc;
+}
+.OnlineUsersList{
+    height: 95%;
+    width: 26%;
+       background-color: white;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+
+
+
+}
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 0.3rem;
+}
+
+/* Online → green */
+.status-dot.online {
+  background-color: #2ecc71;
+  box-shadow: 0 0 5px #2ecc71;
+}
+
+/* Offline → gray */
+.status-dot.offline {
+  background-color: #bdc3c7;
+}
+
+.OnlineUsersHeading{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.OnlineUsersHeading h3{
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: black;
+}
+
+.OnlineUsersListInterior{
+    width: 100%;
+    height: 80%;
+        background-color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+}
+.OnlineUsersListInterior::-webkit-scrollbar{
+    display: none;
+}
+.OnlineUserListItem{
+    width: 80%;
+    height: 10%;
+    background-color: white;
+    margin: 0.3rem 0.2rem;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.OnlineUserListItem >h4{
+    text-align: center;
+   color:black;
+   font-size:'1.5rem';
+   font-weight:'400'
+   
+}
+
+/* Message bubble  */
+
+
+.msgBubble {
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* USER MESSAGE (RIGHT SIDE) */
+.msgBubble.you {
+    align-self: flex-end;
+    background-color: #4caf50;
+    color: white;
+    border-bottom-right-radius: 3px;
+}
+
+/* OTHER USER MESSAGE (LEFT SIDE) */
+.msgBubble.other {
+    align-self: flex-start;
+    background-color: #e4e6eb;
+    color: black;
+    border-bottom-left-radius: 3px;
+}
+
+/* MESSAGE TEXT */
+.msgText {
+    font-size: 1rem;
+    word-break: break-word;
+}
+
+/* TIME STAMP */
+.msgTime {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    align-self: flex-end;
+}

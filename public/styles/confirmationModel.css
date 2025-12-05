@@ -1,0 +1,97 @@
+/* Dark background overlay */
+.ModalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(3px);
+    z-index: 999;
+}
+
+/* Centered modal */
+.ConfirmationModel {
+    width: 420px;
+    background: #111;                 /* Deep black */
+    color: #fff;
+    border-radius: 14px;
+    box-shadow: 0 0 35px rgba(255,255,255,0.1);
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding-bottom: 1rem;
+    z-index: 1000;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Header */
+.ModalHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.2rem 1.5rem;
+    font-size: 1.3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Close button */
+.CloseBtn {
+    background: transparent;
+    border: none;
+    font-size: 1.4rem;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.CloseBtn:hover {
+    color: #d33;
+}
+
+/* Body */
+.ModalBody {
+    padding: 1.5rem;
+}
+
+.ChannelInput {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: #222;
+    color: white;
+    outline: none;
+    font-size: 1rem;
+    transition: 0.2s;
+}
+
+.ChannelInput:focus {
+    border-color: white;
+    background: #1a1a1a;
+}
+
+/* Footer */
+.ModalFooter {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.CreateBtn {
+    background: white;
+    color: black;
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.CreateBtn:hover {
+    background: #e5e5e5;
+}
+* {
+    box-sizing: border-box;
+}
