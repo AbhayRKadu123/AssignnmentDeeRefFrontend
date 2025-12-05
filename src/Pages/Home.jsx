@@ -414,7 +414,7 @@ if(pageNo!=NoOfPages){
     
 
     return <div className="HomePageContainer">
-        <div className="ShowNav"><img onClick={() => { setshownav((prev) => { return !prev }) }} src="public/Images/Menunew.png"></img></div>
+        <div className="ShowNav"><img onClick={() => { setshownav((prev) => { return !prev }) }} src="Images/Menunew.png"></img></div>
 
         <div className="HomePageInnerContainer">
             {ShowCreateChannelBox && <ConfirmatioinModel onClose={() => { setShowCreateChannelBox(false); setNewChannel("") }} NewChannel={NewChannel} setNewChannel={setNewChannel} onCreate={HandleCreateChannel}></ConfirmatioinModel>}
