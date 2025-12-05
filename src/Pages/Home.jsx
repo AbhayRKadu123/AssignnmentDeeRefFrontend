@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import ConfirmatioinModel from "../Components/confirmationModel";
 import JoinChannelModal from "../Components/JoinChannelConfirmationModel";
 import socket from "../../Utils/ConnectToSocket";
+import { useRef } from "react";
 export default function Home() {
     const [ShowCreateChannelBox, setShowCreateChannelBox] = useState(false)
     const [ShowJoinChannelBox, setShowJoinChannelBox] = useState(false)
@@ -23,8 +24,11 @@ export default function Home() {
     const [ActiveMembers, setActiveMembers] = useState([])
     const [OnlineUserCount, setOnlineUserCount] = useState(0)
     const [pageNo, setPageNo] = useState(1)
-    const [NoOfPages,setNoOfPages]=useState(1)
-    const [isTyping,setisTyping]=useState(null)
+    const [NoOfPages, setNoOfPages] = useState(1)
+    const [isTyping, setisTyping] = useState(null)
+    const [shownav, setshownav] = useState(false)
+    const bottomRef = useRef(null);
+
     function getISTTime() {
         const now = new Date();
         const options = {
@@ -38,9 +42,7 @@ export default function Home() {
     }
 
 
-    useEffect(() => {
-        console.log('PageNo', pageNo)
-    }, [pageNo])
+
 
     useEffect(() => {
         // const dummy = [
@@ -49,23 +51,24 @@ export default function Home() {
         //     { message: "What's up?", sender: "other", time: "10:23 AM" },
         // ];
         // setMsgLst(dummy);
-        setNoOfPages((prev)=>{
+        setNoOfPages((prev) => {
             return prev
         })
+      
         console.log('roomName: MsgLst', MsgLst)
     }, [MsgLst]);
 
 
 
     // const apiUrl = "http://localhost:8080";
-    const apiUrl="https://assignmentdeerefbackend.onrender.com"
+    const apiUrl = "https://assignmentdeerefbackend.onrender.com"
     let token = localStorage.getItem("token");
 
     const navigate = useNavigate();
 
     useEffect(() => {
         setMsgLst([])
-        
+
         async function GetAllMessages() {
             try {
                 let result = await axios.get(`${apiUrl}/GetAllMessages?ChannelName=${ActiveChannel}&page=${pageNo}`)
@@ -85,7 +88,7 @@ export default function Home() {
         }
         GetAllMessages()
 
-    }, [ActiveChannel,pageNo])
+    }, [ActiveChannel, pageNo])
 
 
 
@@ -125,7 +128,12 @@ export default function Home() {
 
     }, [ActiveChannel]);
 
+    useEffect(()=>{
+if(pageNo!=NoOfPages){
+          setPageNo(NoOfPages)
 
+        }
+    },[NoOfPages])
     useEffect(() => {
         console.log('IsUserMember', IsUserMember)
     }, [IsUserMember])
@@ -163,22 +171,26 @@ export default function Home() {
             socket.off("receiveMessage", handleMessage);
         };
     }, []);
-    useEffect(()=>{
-        socket.on("SomeOneTyping",(val)=>{
-            console.log('Some One is typing',val)
-            setTimeout(()=>{
+    useEffect(() => {
+        socket.on("SomeOneTyping", (val) => {
+            console.log('Some One is typing', val)
+            setTimeout(() => {
                 setisTyping(val?.user)
-            },100)
-            setTimeout(()=>{
-setisTyping(null)
-            },500)
+            }, 100)
+            setTimeout(() => {
+                setisTyping(null)
+            }, 500)
         })
 
-    },[])
+    }, [])
     function SendMessage(msg) {
         if (msg.trim() === "") {
             toast.error("Message can't be empty");
             return;
+        }
+        if(pageNo!=NoOfPages){
+          setPageNo(NoOfPages)
+
         }
         //  { message: "Hello Abhay 👋", sender: YourUsername, time: "10:21 AM" },
         const NewMsg = {
@@ -284,8 +296,8 @@ setisTyping(null)
     }
     async function IsTyping(Val) {
 
-        socket.emit('isTyping',Val)
-        
+        socket.emit('isTyping', Val)
+
     }
     async function HandleJoinRoom() {
         console.log('Join This Channel');
@@ -367,6 +379,12 @@ setisTyping(null)
 
     }, [])
     useEffect(() => {
+    if (pageNo === NoOfPages) { 
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+}, [MsgLst]);
+
+    useEffect(() => {
         async function GetUserDetails() {
             try {
 
@@ -393,15 +411,18 @@ setisTyping(null)
 
 
     }, [])
+    
 
     return <div className="HomePageContainer">
+        <div className="ShowNav"><img onClick={() => { setshownav((prev) => { return !prev }) }} src="public/Images/Menunew.png"></img></div>
+
         <div className="HomePageInnerContainer">
             {ShowCreateChannelBox && <ConfirmatioinModel onClose={() => { setShowCreateChannelBox(false); setNewChannel("") }} NewChannel={NewChannel} setNewChannel={setNewChannel} onCreate={HandleCreateChannel}></ConfirmatioinModel>}
             <JoinChannelModal show={ShowJoinChannelBox} onConfirm={() => { IsUserMember ? HandleLeaveChannel() : HandleJoinRoom() }} onCancel={() => { setShowJoinChannelBox(false); }} isAlreadyMember={IsUserMember} channelName={SelectedChannelJoin}></JoinChannelModal>
-            <div className="HomePageLeftSide">
+            <div style={{ left: shownav && -2 }} className="HomePageLeftSide">
                 <div className="HomePageLeftSideHeading">
                     <p>Welcome {YourUsername}</p>
-                    <button onClick={()=>{
+                    <button onClick={() => {
                         localStorage.removeItem('UserId')
                         localStorage.removeItem('username')
                         localStorage.removeItem('token')
@@ -412,16 +433,17 @@ setisTyping(null)
                         navigate("/login")
                         toast.success('User Logged out..')
                     }} className="LogoutBtn">LogOut</button>
-                    <button onClick={async ()=>{socket.connect()
-                    setActiveChannel((prev)=>{
-                        return prev
-                    })
-                    await GetIsUserMember(ActiveChannel)
+                    <button onClick={async () => {
+                        socket.connect()
+                        setActiveChannel((prev) => {
+                            return prev
+                        })
+                        await GetIsUserMember(ActiveChannel)
 
 
                     }} className="LogoutBtn">Reconnect</button>
                 </div>
-                <div className="HomePageLeftSideCreateChannel"><h2 onClick={() => { setShowCreateChannelBox(true) }} style={{ fontWeight: '600', fontSize: '1.2rem' }}>+ Create New Channel</h2></div>
+                <div className="HomePageLeftSideCreateChannel"><h2 onClick={() => { setShowCreateChannelBox(true) }} style={{ fontWeight: '600', fontSize: '1rem' }}>+ Create New Channel</h2></div>
                 <div className="HomePageLeftSideAllChannels">
                     {ChannelList?.map((ele) => {
                         return (
@@ -471,7 +493,7 @@ setisTyping(null)
                 <div className="HomePageRightSideBottomSection">
                     <div className="MessageBox">
                         <div className="IsTyping">
-                            <p style={{color:'black',textAlign:'center',fontSize:'0.8rem',paddingLeft:'0.5rem'}}>{isTyping&&`${isTyping} is typing....`}</p>
+                            <p style={{ color: 'black', textAlign: 'center', fontSize: '0.8rem', paddingLeft: '0.5rem' }}>{isTyping && `${isTyping} is typing....`}</p>
                         </div>
                         <div className="MessageBoxScreen">
                             {MsgLst?.map((m, index) => (
@@ -481,8 +503,9 @@ setisTyping(null)
                                     <span className="msgTime">{m.sender == YourUsername ? 'You' : `${m.sender}`}</span>
 
                                 </div>
-                            ))}
 
+                            ))}
+                            <div ref={bottomRef}></div>
 
 
                         </div>
@@ -503,7 +526,7 @@ setisTyping(null)
                                 onClick={() => {
 
                                     setPageNo((prev) => {
-                                        if (prev==NoOfPages) return NoOfPages
+                                        if (prev == NoOfPages) return NoOfPages
 
                                         return prev = prev + 1
 
@@ -511,11 +534,11 @@ setisTyping(null)
                                     })
                                 }}
 
-                                className={`pagination-btn next-btn ${pageNo==NoOfPages &&'BtnNotActive'}`}>Next</button>
+                                className={`pagination-btn next-btn ${pageNo == NoOfPages && 'BtnNotActive'}`}>Next</button>
                         </div>
 
                         <div className="MessageBoxInput">
-                            <input  disabled={!IsUserMember}  onChange={(e) => { IsTyping({ActiveChannel:ActiveChannel,user:YourUsername}); setMsg(e.target.value) }} value={Msg} className="MessageInput"></input><button disabled={!IsUserMember}  onClick={() => { SendMessage(Msg) }} className="MessageSendBtn">Send</button>
+                            <input disabled={!IsUserMember} onChange={(e) => { IsTyping({ ActiveChannel: ActiveChannel, user: YourUsername }); setMsg(e.target.value) }} value={Msg} className="MessageInput"></input><button disabled={!IsUserMember} onClick={() => { SendMessage(Msg) }} className="MessageSendBtn">Send</button>
                         </div>
 
                     </div>

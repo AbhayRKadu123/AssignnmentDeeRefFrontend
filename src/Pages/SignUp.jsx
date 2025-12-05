@@ -8,7 +8,9 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const apiUrl = 'http://localhost:8080';
+  // const apiUrl = 'http://localhost:8080';
+    const apiUrl="https://assignmentdeerefbackend.onrender.com"
+
 
 const handleSignup = async (e) => {
   e.preventDefault();
